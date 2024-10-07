@@ -21,7 +21,28 @@
     .lato-thin {
   font-family: "Lato", sans-serif;
   font-style: normal;
-}
+};
+/* Spinner styles */
+#spinner {
+        display: none;
+        width: 40px;
+        height: 40px;
+        border: 4px solid rgba(0, 0, 0, 0.1);
+        border-top: 4px solid #000;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 20px auto;
+      }
+
+      /* Spinner animation */
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      };
 </style>
 </head>
 <body class="lato-thin max-w-[1250px] mx-auto">
@@ -47,7 +68,7 @@
                 <h4 class="text-xl">Bringing Families Together ❤️‍🔥 </h4>
                 <h1 class="text-6xl font-bold leading-[60px]">Your Path to Adoption Starts Here</h1>
                 <p class="leading-8">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a.</p>
-                <button class="btn bg-[#0E7A81] text-white">View More</button>
+                <button onclick="location.href='#pets-container'" class="btn bg-[#0E7A81] text-white">View More</button>
                 <img src="images/pet.webp" alt="">
             </div>
         </section>
@@ -62,6 +83,8 @@
             </div>
 
         </section>
+        <!-- spinner  -->
+         <div id="spinner"></div>
 
         <div class="flex justify-between items-center w-11/12 mx-auto">
             <h3 class="text-xl font-bold">Best Deal For you</h3>
@@ -69,9 +92,9 @@
         </div>
         <section>
           
-            <div class="w-11/12 mx-auto py-12 grid grid-cols-4 gap-4">
-              <div class="grid col-span-3">
-                <div id="pets-container" class="grid grid-cols-3  gap-4">
+            <div class="w-11/12 mx-auto py-12 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              <div class="grid md:col-span-2 lg:col-span-3">
+                <div id="pets-container" class="grid md:grid-cols-2 lg:grid-cols-3  gap-4">
                   <!-- <div class=""></div>
                   <div></div> -->
                   
@@ -90,9 +113,23 @@
                     </div> -->
                 </div>
               </div>
-              <div class="border border-solid p-5 shadow-sm rounded-md gap-5 grid col-start-4 col-end-5">images</div>
+              <div id="like" class="border border-solid p-2 shadow-sm rounded-md gap-2">images</div>
             </div>
             
+            <!-- Open the modal using ID.showModal() method -->
+   <button class="btn hidden" onclick="customModal.showModal()">open modal</button>
+   <dialog id="customModal" class="modal">
+  <div class="modal-box">
+    <div id="pet-content"></div>
+    <div class="modal-action flex justify-center">
+      <form method="dialog">
+        <!-- if there is a button in form, it will close the modal -->
+        <button class="btn font-bold text-lg text-[#0E7A81] bg-green-100">Cancel</button>
+      </form>
+    </div>
+  </div>
+   </dialog>
+
         </section>
     </main>
         <footer class="bg-black text-white w-full mx-auto">
