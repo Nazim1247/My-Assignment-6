@@ -20,6 +20,19 @@ const loadAllPetsCategories = async () => {
 const displayAllPets = (pets) => {
     const petsContainer = document.getElementById('pets-container');
     petsContainer.innerHTML = '';
+
+    if(pets.length === 0){
+        petsContainer.innerHTML = `
+        <div class="grid col-span-1 md:col-span-3 text-center shadow-sm p-2 md:p-20 space-y-5 bg-slate-50">
+        <img class="mx-auto" src="images/error.webp" />
+        <h3 class="text-2xl font-bold">No Information Available</h3>
+        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at 
+its layout. The point of using Lorem Ipsum is that it has a.</p>
+        </div>
+        `;
+    return;
+    }
+        
     pets.forEach(pet => {
         const div = document.createElement('div');
     div.innerHTML = `
@@ -90,17 +103,28 @@ const likeButton = (image) => {
     like.appendChild(div);
 }
 
+const activeRemove = () => {
+    const buttons = document.getElementsByClassName('btn-active');
+    for(let button of buttons){
+        button.classList.remove('active');
+    }
+}
 
 const showCategories = (id) => {
     document.getElementById('spinner').style.display = 'block';
-
     setTimeout(function () {
         // displayAllPets()
     },2000)
     
+
     fetch(`https://openapi.programming-hero.com/api/peddy/category/${id}`)
     .then((response) => response.json())
-    .then((data) => displayAllPets(data.data))
+    .then((data) => {
+        activeRemove()
+        const activeBtn = document.getElementById(`btn-${id}`)
+        activeBtn.classList.add('active');
+        displayAllPets(data.data)
+    })
     .catch((error) => console.log(error));
 
 }
@@ -111,7 +135,7 @@ const displayAllPetsCategories = (categories) => {
     categories.forEach((category) => {
         const button = document.createElement('button');
         button.innerHTML = `
-        <button onclick="showCategories('${category.category}')" class="w-11/12 mx-auto flex justify-center items-center gap-3 py-2 px-5 border border-solid rounded-lg">
+        <button id="btn-${category.category}" onclick="showCategories('${category.category}')" class="btn-active w-11/12 mx-auto flex justify-center items-center gap-3 py-2 px-5 border border-solid rounded-lg">
         <img src="${category.category_icon}" />
         <p class="text-lg font-bold">${category.category}</p>
         </button>
