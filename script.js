@@ -64,9 +64,9 @@ const displayAllPetsCategories = (categories) => {
     })
 };
 
-const sortByPrice = () => {
-    
-}
+// const sortByPrice = () => {
+//     document.getElementById('pets-container')
+// }
 
 const likeButton = (image) => {
     const like = document.getElementById('like');
@@ -85,7 +85,7 @@ const adoptButton = () => {
     let countDownTime = setInterval(function () {
         countDown--;
         countDownElement.innerHTML = `
-        <div class="text-center space-y-5">
+        <div class="text-center space-y-5 p-10 shadow-lg">
         <img class="mx-auto" src="images/logo.webp" />
         <h3 class="text-4xl font-bold">Congrats</h3>
         <p class="text-lg">Adoption Process is Start For your Pet</p>
@@ -93,9 +93,9 @@ const adoptButton = () => {
         </div>
         `;
         if(countDown <= 0){
+            document.getElementById('adoptModal').close();
             clearInterval(countDownTime);
             countDownElement.innerHTML = '';
-            document.getElementById('adoptModal').closeModal();
         }
     }, 1000);
 };
