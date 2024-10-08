@@ -20,39 +20,17 @@
 <style>
   .active{
         background-color: #0E7A81;
-        color: white;
-        
+        color: white; 
     };
 
     .lato-thin {
   font-family: "Lato", sans-serif;
   font-style: normal;
 };
-/* Spinner styles */
-#spinner {
-        display: none;
-        width: 40px;
-        height: 40px;
-        border: 4px solid rgba(0, 0, 0, 0.1);
-        border-top: 4px solid #000;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-        margin: 20px auto;
-      }
-
-      /* Spinner animation */
-      @keyframes spin {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
-      };
-      
 </style>
 </head>
 <body class="lato-thin max-w-[1250px] mx-auto">
+  <!-- navbar -->
     <header class="w-11/12 mx-auto">
         <div class="navbar py-12">
             <div class="navbar-start flex items-center gap-3">
@@ -70,6 +48,7 @@
           </div>
     </header>
     <main>
+      <!-- banner section  -->
         <section>
             <div class="w-7/12 mx-auto text-center space-y-5">
                 <h4 class="text-xl">Bringing Families Together ❤️‍🔥 </h4>
@@ -79,18 +58,18 @@
                 <img src="images/pet.webp" alt="">
             </div>
         </section>
+
+        <!-- categories button  -->
         <section>
             <div class="text-center w-6/12 mx-auto space-y-5 py-12">
                 <h2 class="text-3xl font-bold">Adopt  Your  Best Friend</h2>
                 <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a.</p>
             </div>
 
-            <div id="btn-pets" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 py-12 w-11/12 mx-auto">
-                
+            <div id="btn-pets" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 py-12 w-11/12 mx-auto">    
             </div>
         </section>
 
-        
         <!-- spinner  -->
         <div id="spinner" class="hidden">
           <div class="flex text-center justify-center items-center">
@@ -103,19 +82,17 @@
           </div>
         </div>
         
-         
-
+         <!-- sort by price  -->
         <div class="flex justify-between items-center w-11/12 mx-auto">
             <h3 class="text-xl font-bold">Best Deal For you</h3>
-            <button class="btn btn-md text-white font-bold bg-[#0E7A81]">Sort by Price</button>
+            <button onclick="sortByPrice()" class="btn btn-md text-white font-bold bg-[#0E7A81]">Sort by Price</button>
         </div>
+
+        <!-- all pets  -->
         <section>
-          
             <div class="w-11/12 mx-auto py-12 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               <div class="grid md:col-span-2 lg:col-span-3">
                 <div id="pets-container" class="grid md:grid-cols-2 lg:grid-cols-3  gap-4">
-                  <!-- <div class=""></div>
-                  <div></div> -->
                   
                     <!-- <div class="p-4 border border-solid shadow-sm">
                         <img src="" alt="">
@@ -134,14 +111,15 @@
               </div>
               <div id="like" class="grid grid-cols-2 auto-rows-min border border-solid p-2 shadow-sm rounded-md gap-2"></div>
             </div>
+        </section>
             
             <!-- Open the modal using ID.showModal() method -->
-   <button class="btn hidden" onclick="adoptModal.showModal()">open modal</button>
+   <button class="btn hidden" onclick="adoptModal.showModal()"></button>
    <dialog id="adoptModal" class="modal">
      <div class="modal-box">
     
-      <div class="adopt-content"></div>
-      
+      <div id="adopt-content"></div>
+
     <div class="modal-action">
       <form method="dialog">
         <!-- if there is a button in form, it will close the modal -->
@@ -151,12 +129,13 @@
      </div>
    </dialog>
 
-
             <!-- Open the modal using ID.showModal() method -->
    <button class="btn hidden" onclick="customModal.showModal()">open modal</button>
    <dialog id="customModal" class="modal">
   <div class="modal-box">
+
     <div id="pet-content"></div>
+
     <div class="modal-action flex justify-center">
       <form method="dialog">
         <!-- if there is a button in form, it will close the modal -->
@@ -165,8 +144,7 @@
     </div>
   </div>
    </dialog>
-
-        </section>
+  
     </main>
         <footer class="bg-black text-white w-full mx-auto">
             <div class="footer py-10 w-11/12 mx-auto">

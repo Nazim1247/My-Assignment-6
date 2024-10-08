@@ -27,8 +27,7 @@ its layout. The point of using Lorem Ipsum is that it has a.</p>
         </div>
         `;
     return;
-    }
-    
+    } 
     pets.forEach(pet => {
         const div = document.createElement('div');
     div.innerHTML = `
@@ -65,6 +64,10 @@ const displayAllPetsCategories = (categories) => {
     })
 };
 
+const sortByPrice = () => {
+    
+}
+
 const likeButton = (image) => {
     const like = document.getElementById('like');
     const div = document.createElement('div');
@@ -74,41 +77,27 @@ const likeButton = (image) => {
     like.appendChild(div);
 };
 
-const adoptButton = (adopt) => {
-    fetch(`https://openapi.programming-hero.com/api/peddy/pet/${adopt}`)
-    .then((res) => res.json())
-    .then((data) => displayAdopt(data.petData))
-    .catch((error) => console.log(error));
-};
+const adoptButton = () => {
 
-const displayAdopt = () => {
-    console.log('adopt')
-    let adoptContainer = document.getElementById('adopt-content');
-    
-    // let countDown = 3;
-    // let countDownTime = setInterval(function () {
-    //     countDown--;
-    //     adoptContainer.innerHTML = countDown;
-    //     if(countDown <= 0){
-    //         clearInterval(countDownTime);
-    //         adoptContainer.innerHTML = '';
-    //     }
-    // }, 1000);
-    
-
-    // let countDown = 3;
-    // let countDownElement = document.getElementById('adopt-btn');
-    // let countDownTime = setInterval(function () {
-    //     countDown--;
-    //     countDownElement.innerHTML = countDown;
-    //     if(countDown <= 0){
-    //         clearInterval(countDownTime);
-    //         countDownElement.innerHTML = '';
-    //     }
-    // }, 1000);
-
-
+    let countDown = 4;
     document.getElementById('adoptModal').showModal();
+    let countDownElement = document.getElementById('adopt-content');
+    let countDownTime = setInterval(function () {
+        countDown--;
+        countDownElement.innerHTML = `
+        <div class="text-center space-y-5">
+        <img class="mx-auto" src="images/logo.webp" />
+        <h3 class="text-4xl font-bold">Congrats</h3>
+        <p class="text-lg">Adoption Process is Start For your Pet</p>
+        <p class="text-5xl font-bold text-red-600">${countDown}</p>
+        </div>
+        `;
+        if(countDown <= 0){
+            clearInterval(countDownTime);
+            countDownElement.innerHTML = '';
+            document.getElementById('adoptModal').closeModal();
+        }
+    }, 1000);
 };
 
 const loadPetDetails = (petId) => {   
