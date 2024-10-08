@@ -1,27 +1,23 @@
 
 
-
-
 const loadAllPets = async () => {
     const response = await fetch(`https://openapi.programming-hero.com/api/peddy/pets`)
     const data = await response.json()
     displayAllPets(data.pets);
 };
 
-
 const loadAllPetsCategories = async () => {
     const response = await fetch(`https://openapi.programming-hero.com/api/peddy/categories`)
     const data = await response.json()
-    displayAllPetsCategories(data.categories);
-    // console.log(data.categories)
-    
+    displayAllPetsCategories(data.categories);  
 };
 
 const displayAllPets = (pets) => {
+    document.getElementById('spinner').style.display = 'none';
+
     const petsContainer = document.getElementById('pets-container');
     petsContainer.innerHTML = '';
-
-    if(pets.length === 0){
+    if(pets.length === 0){   
         petsContainer.innerHTML = `
         <div class="grid col-span-1 md:col-span-3 text-center shadow-sm p-2 md:p-20 space-y-5 bg-slate-50">
         <img class="mx-auto" src="images/error.webp" />
@@ -32,7 +28,7 @@ its layout. The point of using Lorem Ipsum is that it has a.</p>
         `;
     return;
     }
-        
+    
     pets.forEach(pet => {
         const div = document.createElement('div');
     div.innerHTML = `
@@ -45,8 +41,8 @@ its layout. The point of using Lorem Ipsum is that it has a.</p>
                     <p class="text-gray-400">$ Price : ${pet.price ? `${pet.price}` : 'Not available'}</p>
                     <hr class="my-3" />
                     <div class="space-y-3 lg:space-y-0 lg:flex items-center gap-4 mt-2">
-                        <button onclick="likeButton('${pet.image}s')" class="btn btn-sm"><i class="fa-solid fa-thumbs-up"></i></button>
-                        <button class="btn btn-sm">Adopt</button>
+                        <button onclick="likeButton('${pet.image}')" class="btn btn-sm"><i class="fa-solid fa-thumbs-up"></i></button>
+                        <button id="adopt-btn" onclick="adoptButton('${pet.petId}')" class="btn btn-sm">Adopt</button>
                         <button onclick="loadPetDetails('${pet.petId}')" class="btn btn-sm">Details</button>
                     </div>
                 </div>
@@ -55,18 +51,74 @@ its layout. The point of using Lorem Ipsum is that it has a.</p>
     })  
 };
 
-const loadPetDetails = (petId) => {
+const displayAllPetsCategories = (categories) => {
+    const petCategories = document.getElementById('btn-pets');
+    categories.forEach((category) => {
+        const button = document.createElement('button');
+        button.innerHTML = `
+        <button id="btn-${category.category}" onclick="showCategories('${category.category}')" class="btn-active w-11/12 mx-auto flex justify-center items-center gap-3 py-2 px-5 border border-solid rounded-lg">
+        <img src="${category.category_icon}" />
+        <p class="text-lg font-bold">${category.category}</p>
+        </button>
+        `;
+        petCategories.appendChild(button);
+    })
+};
+
+const likeButton = (image) => {
+    const like = document.getElementById('like');
+    const div = document.createElement('div');
+    div.innerHTML = `
+    <img class="p-1 rounded-lg" src="${image}" />
+    `;
+    like.appendChild(div);
+};
+
+const adoptButton = (adopt) => {
+    fetch(`https://openapi.programming-hero.com/api/peddy/pet/${adopt}`)
+    .then((res) => res.json())
+    .then((data) => displayAdopt(data.petData))
+    .catch((error) => console.log(error));
+};
+
+const displayAdopt = () => {
+    console.log('adopt')
+    let adoptContainer = document.getElementById('adopt-content');
     
+    // let countDown = 3;
+    // let countDownTime = setInterval(function () {
+    //     countDown--;
+    //     adoptContainer.innerHTML = countDown;
+    //     if(countDown <= 0){
+    //         clearInterval(countDownTime);
+    //         adoptContainer.innerHTML = '';
+    //     }
+    // }, 1000);
+    
+
+    // let countDown = 3;
+    // let countDownElement = document.getElementById('adopt-btn');
+    // let countDownTime = setInterval(function () {
+    //     countDown--;
+    //     countDownElement.innerHTML = countDown;
+    //     if(countDown <= 0){
+    //         clearInterval(countDownTime);
+    //         countDownElement.innerHTML = '';
+    //     }
+    // }, 1000);
+
+
+    document.getElementById('adoptModal').showModal();
+};
+
+const loadPetDetails = (petId) => {   
     fetch(`https://openapi.programming-hero.com/api/peddy/pet/${petId}`)
     .then((res) => res.json())
     .then((data) => displayPetDetails(data.petData))
     .catch((error) => console.log(error));
-    
-
-}
+};
 
 const displayPetDetails = (pet) => {
-    console.log(pet);
     const detailContainer = document.getElementById('pet-content');
     const div = document.createElement('div');
     div.innerHTML = `
@@ -90,34 +142,21 @@ const displayPetDetails = (pet) => {
     detailContainer.appendChild(div);
 
     document.getElementById('customModal').showModal();
-}
-
-const likeButton = (image) => {
-    const like = document.getElementById('like');
-    const div = document.createElement('div');
-    div.innerHTML = `
-    <div class="grid grid-cols-2">
-    <img class="p-1 rounded-lg" src="${image}" />
-    </div>
-    `;
-    like.appendChild(div);
-}
+};
 
 const activeRemove = () => {
     const buttons = document.getElementsByClassName('btn-active');
     for(let button of buttons){
         button.classList.remove('active');
     }
-}
+};
 
 const showCategories = (id) => {
+    const petsContainer = document.getElementById('pets-container');
+    petsContainer.innerHTML = '';
     document.getElementById('spinner').style.display = 'block';
     setTimeout(function () {
-        // displayAllPets()
-    },2000)
-    
-
-    fetch(`https://openapi.programming-hero.com/api/peddy/category/${id}`)
+        fetch(`https://openapi.programming-hero.com/api/peddy/category/${id}`)
     .then((response) => response.json())
     .then((data) => {
         activeRemove()
@@ -127,22 +166,8 @@ const showCategories = (id) => {
     })
     .catch((error) => console.log(error));
 
-}
-
-const displayAllPetsCategories = (categories) => {
-    const petCategories = document.getElementById('btn-pets');
-    
-    categories.forEach((category) => {
-        const button = document.createElement('button');
-        button.innerHTML = `
-        <button id="btn-${category.category}" onclick="showCategories('${category.category}')" class="btn-active w-11/12 mx-auto flex justify-center items-center gap-3 py-2 px-5 border border-solid rounded-lg">
-        <img src="${category.category_icon}" />
-        <p class="text-lg font-bold">${category.category}</p>
-        </button>
-        `;
-        petCategories.appendChild(button);
-    })
-}
+    }, 2000)   
+};
 
 loadAllPets()
 loadAllPetsCategories()
