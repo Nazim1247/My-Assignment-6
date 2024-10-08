@@ -37,7 +37,7 @@
               <img src="images/logo.webp" alt="">
               <p class="text-2xl font-bold">Peddy</p>
             </div>
-            <div class="navbar-center hidden lg:flex gap-5">
+            <div class="navbar-center hidden md:flex gap-5">
               <p>Home</p>
               <p>Shop</p>
               <p>Contact</p>
@@ -85,10 +85,10 @@
          <!-- sort by price  -->
         <div class="flex justify-between items-center w-11/12 mx-auto">
             <h3 class="text-xl font-bold">Best Deal For you</h3>
-            <button onclick="sortByPrice()" class="btn btn-md text-white font-bold bg-[#0E7A81]">Sort by Price</button>
+            <button id="sorted-price" onclick="sortByPrice()" class="btn btn-md text-white font-bold bg-[#0E7A81]">Sort by Price</button>
         </div>
 
-        <!-- all pets  -->
+        <!-- all pets card -->
         <section>
             <div class="w-11/12 mx-auto py-12 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               <div class="grid md:col-span-2 lg:col-span-3">
@@ -109,7 +109,7 @@
                     </div> -->
                 </div>
               </div>
-              <div id="like" class="grid grid-cols-2 auto-rows-min border border-solid p-2 shadow-sm rounded-md gap-2"></div>
+              <div id="like" class="grid md:grid-cols-2 auto-rows-min border border-solid p-2 shadow-sm rounded-md gap-2"></div>
             </div>
         </section>
             

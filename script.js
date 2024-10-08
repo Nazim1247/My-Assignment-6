@@ -1,4 +1,53 @@
 
+let sortByPriceData = [];
+
+async function sortByPrice () {
+    // document.getElementById('spinner').style.display = 'block';
+    // setTimeout(function () {
+    //     displayAllPets()
+    // }, 2000)
+    try{
+        const response = await fetch(`https://openapi.programming-hero.com/api/peddy/pets`);
+        const data = await response.json();
+        sortByPriceData = data.pets;
+        displaySortByPrice();
+        
+    } catch{
+        console.log('ERROR');
+    }
+  
+};
+
+function displaySortByPrice () {
+
+    sortByPriceData.sort(function (a, b) {
+        return b.price - a.price;
+    });
+
+    const sortedByPrice = document.getElementById('pets-container');
+    sortedByPrice.innerHTML = '';
+    
+    sortByPriceData.forEach(pet => {
+        const div = document.createElement('div');
+        div.innerHTML = `
+        <div class="p-4 border border-solid shadow-sm rounded-md">
+                    <img class="w-full md:h-[150px] rounded-md" src="${pet.image}" alt="">
+                    <h4 class="font-semibold mt-2">${pet.pet_name}</h4>
+                    <p class="text-gray-400"><i class="fa-solid fa-vector-square"></i> Breed: ${pet.breed ? `${pet.breed}` : 'Not available'}</p>
+                    <p class="text-gray-400"><i class="fa-solid fa-cake-candles"></i> Birth: ${pet.date_of_birth ? `${pet.date_of_birth}` : 'Not available'}</p>
+                    <p class="text-gray-400"><i class="fa-solid fa-mars-stroke-up"></i> Gender: ${pet.gender ? `${pet.gender}` : 'Not available'}</p>
+                    <p class="text-gray-400">$ Price : ${pet.price ? `${pet.price}` : 'Not available'}</p>
+                    <hr class="my-3" />
+                    <div class="space-y-3 lg:space-y-0 lg:flex items-center gap-4 mt-2">
+                        <button onclick="likeButton('${pet.image}')" class="btn btn-sm"><i class="fa-solid fa-thumbs-up"></i></button>
+                        <button id="adopt-btn" onclick="adoptButton('${pet.petId}')" class="btn btn-sm">Adopt</button>
+                        <button onclick="loadPetDetails('${pet.petId}')" class="btn btn-sm">Details</button>
+                    </div>
+                </div>
+        `;
+        sortedByPrice.appendChild(div);
+    })
+};
 
 const loadAllPets = async () => {
     const response = await fetch(`https://openapi.programming-hero.com/api/peddy/pets`)
@@ -63,10 +112,6 @@ const displayAllPetsCategories = (categories) => {
         petCategories.appendChild(button);
     })
 };
-
-// const sortByPrice = () => {
-//     document.getElementById('pets-container')
-// }
 
 const likeButton = (image) => {
     const like = document.getElementById('like');
