@@ -1,25 +1,4 @@
 
-
-
-// document.getElementById('sorted-price').addEventListener('click', async function () {
-//     document.getElementById('spinner').style.display = 'block';
-
-//     setTimeout(function () {
-
-// try{
-//             const response = await fetch(`https://openapi.programming-hero.com/api/peddy/pets`);
-//             const data = await response.json();
-//             sortByPriceData = data.pets;
-//             displaySortByPrice();
-            
-//         } catch{
-//             console.log('ERROR');
-//         }
-
-//             displayAllPets(sortByPriceData)
-//         }, 2000)
-// })
-
 let sortByPriceData = [];
 
 const sortByPrice = () => {
@@ -28,21 +7,19 @@ const sortByPrice = () => {
     sortedByPrice.innerHTML = '';
     
     setTimeout(function () {
-    
+
         fetch(`https://openapi.programming-hero.com/api/peddy/pets`)
         .then(response => response.json())
         .then(data => {
             sortByPriceData = data.pets;
 
-            displaySortByPrice()
-        activeRemove()
-        displayAllPets(sortByPriceData)
+        displaySortByPrice();
+        activeRemove();
+        displayAllPets(sortByPriceData);
         })
-        .catch(error => console.log(error))
-        
-        
-        
-}, 2000)
+        .catch(error => console.log(error));
+         
+}, 2000);
 };
 
 const displaySortByPrice = () => {
