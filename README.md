@@ -2,7 +2,7 @@
 # Project Details.
 
 ### 1. Project name:
-#### The world of Pets.
+## The world of Pets.
 
 ### 2. Short description of the project:
 ##### This is a pet project, there are many pets, and there are several classes of animals, such as cats, dogs, rabbits, etc. Here the cats are very cute, and the rabbits are also very cute. Especially cats and rapids are my favorite animals, I even have a pet cat. But I don't like dogs, because dogs attack people. So I say you all keep cats. Ok thanks everyone. And especially the programming hero.
@@ -22,4 +22,4 @@
 - forEach. (etc).
 
 ### 5. Live link to the deployed project:
-##### https://bespoke-belekoy-cf7ee8.netlify.app
+#### https://bespoke-belekoy-cf7ee8.netlify.app
