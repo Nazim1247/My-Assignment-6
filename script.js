@@ -1,24 +1,51 @@
 
+
+
+// document.getElementById('sorted-price').addEventListener('click', async function () {
+//     document.getElementById('spinner').style.display = 'block';
+
+//     setTimeout(function () {
+
+// try{
+//             const response = await fetch(`https://openapi.programming-hero.com/api/peddy/pets`);
+//             const data = await response.json();
+//             sortByPriceData = data.pets;
+//             displaySortByPrice();
+            
+//         } catch{
+//             console.log('ERROR');
+//         }
+
+//             displayAllPets(sortByPriceData)
+//         }, 2000)
+// })
+
 let sortByPriceData = [];
 
-async function sortByPrice () {
-    // document.getElementById('spinner').style.display = 'block';
-    // setTimeout(function () {
-    //     displayAllPets()
-    // }, 2000)
-    try{
-        const response = await fetch(`https://openapi.programming-hero.com/api/peddy/pets`);
-        const data = await response.json();
-        sortByPriceData = data.pets;
-        displaySortByPrice();
+const sortByPrice = () => {
+    document.getElementById('spinner').style.display = 'block';
+    const sortedByPrice = document.getElementById('pets-container');
+    sortedByPrice.innerHTML = '';
+    
+    setTimeout(function () {
+    
+        fetch(`https://openapi.programming-hero.com/api/peddy/pets`)
+        .then(response => response.json())
+        .then(data => {
+            sortByPriceData = data.pets;
+
+            displaySortByPrice()
+        activeRemove()
+        displayAllPets(sortByPriceData)
+        })
+        .catch(error => console.log(error))
         
-    } catch{
-        console.log('ERROR');
-    }
-  
+        
+        
+}, 2000)
 };
 
-function displaySortByPrice () {
+const displaySortByPrice = () => {
 
     sortByPriceData.sort(function (a, b) {
         return b.price - a.price;
@@ -33,15 +60,15 @@ function displaySortByPrice () {
         <div class="p-4 border border-solid shadow-sm rounded-md">
                     <img class="w-full md:h-[150px] rounded-md" src="${pet.image}" alt="">
                     <h4 class="font-semibold mt-2">${pet.pet_name}</h4>
-                    <p class="text-gray-400"><i class="fa-solid fa-vector-square"></i> Breed: ${pet.breed ? `${pet.breed}` : 'Not available'}</p>
+                    <p class="text-gray-400"><i class="fa-solid fa-border-all"></i> Breed: ${pet.breed ? `${pet.breed}` : 'Not available'}</p>
                     <p class="text-gray-400"><i class="fa-solid fa-cake-candles"></i> Birth: ${pet.date_of_birth ? `${pet.date_of_birth}` : 'Not available'}</p>
                     <p class="text-gray-400"><i class="fa-solid fa-mars-stroke-up"></i> Gender: ${pet.gender ? `${pet.gender}` : 'Not available'}</p>
                     <p class="text-gray-400">$ Price : ${pet.price ? `${pet.price}` : 'Not available'}</p>
                     <hr class="my-3" />
                     <div class="space-y-3 lg:space-y-0 lg:flex items-center gap-4 mt-2">
-                        <button onclick="likeButton('${pet.image}')" class="btn btn-sm"><i class="fa-solid fa-thumbs-up"></i></button>
-                        <button id="adopt-btn" onclick="adoptButton('${pet.petId}')" class="btn btn-sm">Adopt</button>
-                        <button onclick="loadPetDetails('${pet.petId}')" class="btn btn-sm">Details</button>
+                        <button onclick="likeButton('${pet.image}')" class="btn btn-sm"><i class="fa-solid fa-thumbs-up text-[#0E7A81]"></i></button>
+                        <button id="adopt-btn" onclick="adoptButton('${pet.petId}')" class="btn btn-sm text-[#0E7A81]">Adopt</button>
+                        <button onclick="loadPetDetails('${pet.petId}')" class="btn btn-sm text-[#0E7A81]">Details</button>
                     </div>
                 </div>
         `;
@@ -83,15 +110,15 @@ its layout. The point of using Lorem Ipsum is that it has a.</p>
     <div class="p-4 border border-solid shadow-sm rounded-md">
                     <img class="w-full md:h-[150px] rounded-md" src="${pet.image}" alt="">
                     <h4 class="font-semibold mt-2">${pet.pet_name}</h4>
-                    <p class="text-gray-400"><i class="fa-solid fa-vector-square"></i> Breed: ${pet.breed ? `${pet.breed}` : 'Not available'}</p>
+                    <p class="text-gray-400"><i class="fa-solid fa-border-all"></i> Breed: ${pet.breed ? `${pet.breed}` : 'Not available'}</p>
                     <p class="text-gray-400"><i class="fa-solid fa-cake-candles"></i> Birth: ${pet.date_of_birth ? `${pet.date_of_birth}` : 'Not available'}</p>
                     <p class="text-gray-400"><i class="fa-solid fa-mars-stroke-up"></i> Gender: ${pet.gender ? `${pet.gender}` : 'Not available'}</p>
                     <p class="text-gray-400">$ Price : ${pet.price ? `${pet.price}` : 'Not available'}</p>
                     <hr class="my-3" />
                     <div class="space-y-3 lg:space-y-0 lg:flex items-center gap-4 mt-2">
-                        <button onclick="likeButton('${pet.image}')" class="btn btn-sm"><i class="fa-solid fa-thumbs-up"></i></button>
-                        <button id="adopt-btn" onclick="adoptButton('${pet.petId}')" class="btn btn-sm">Adopt</button>
-                        <button onclick="loadPetDetails('${pet.petId}')" class="btn btn-sm">Details</button>
+                        <button onclick="likeButton('${pet.image}')" class="btn btn-sm"><i class="text-[#0E7A81] fa-solid fa-thumbs-up"></i></button>
+                        <button id="adopt-btn" onclick="adoptButton('${pet.petId}')" class="btn btn-sm text-[#0E7A81]">Adopt</button>
+                        <button onclick="loadPetDetails('${pet.petId}')" class="btn btn-sm text-[#0E7A81]">Details</button>
                     </div>
                 </div>
                 `;
@@ -124,14 +151,14 @@ const likeButton = (image) => {
 
 const adoptButton = () => {
 
-    let countDown = 4;
     document.getElementById('adoptModal').showModal();
+    let countDown = 4;
     let countDownElement = document.getElementById('adopt-content');
     let countDownTime = setInterval(function () {
         countDown--;
         countDownElement.innerHTML = `
         <div class="text-center space-y-5 p-10 shadow-lg">
-        <img class="mx-auto" src="images/logo.webp" />
+        <i class="text-4xl text-[#0E7A81] fa-solid fa-handshake"></i>
         <h3 class="text-4xl font-bold">Congrats</h3>
         <p class="text-lg">Adoption Process is Start For your Pet</p>
         <p class="text-5xl font-bold text-red-600">${countDown}</p>
@@ -158,10 +185,10 @@ const displayPetDetails = (pet) => {
     div.innerHTML = `
     <div>
     <div class="p-4 border border-solid shadow-sm rounded-md">
-                    <img class="w-full h-[200px] rounded-md" src="${pet.image}" alt="">
+                    <img class="w-full h-[220px] rounded-md" src="${pet.image}" alt="">
                     <h4 class="font-bold mt-2 py-2">${pet.pet_name}</h4>
                     <div class="grid grid-cols-2">
-                    <p class="text-gray-400"><i class="fa-solid fa-vector-square"></i> Breed: ${pet.breed ? `${pet.breed}` : 'Not available'}</p>
+                    <p class="text-gray-400"><i class="fa-solid fa-border-all"></i> Breed: ${pet.breed ? `${pet.breed}` : 'Not available'}</p>
                     <p class="text-gray-400"><i class="fa-solid fa-cake-candles"></i> Birth: ${pet.date_of_birth ? `${pet.date_of_birth}` : 'Not available'}</p>
                     <p class="text-gray-400"><i class="fa-solid fa-mars-stroke-up"></i> Gender: ${pet.gender ? `${pet.gender}` : 'Not available'}</p>
                     <p class="text-gray-400"><i class="fa-solid fa-mars-stroke-up"></i> Vaccinated Status: ${pet.vaccinated_status ? `${pet.vaccinated_status}` : 'Not available'}</p>
